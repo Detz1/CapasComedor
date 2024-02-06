@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consulta de Solicitud</title>
+</head>
+<body>
+
+  <h1>Consulta de Solicitud por ID</h1>
+
+  <form id="consultaForm">
+    <label for="solicitudId">ID de Solicitud:</label>
+    <input type="text" id="solicitudId" name="solicitudId" required>
+
+    <button type="button" onclick="consultarSolicitud()">Consultar Solicitud</button>
+  </form>
+
+  <div id="resultado" style="display: none;">
+    <h2>Resultado de la Consulta</h2>
+    <div id="detalleSolicitud"></div>
+  </div>
+
+  <script>
+    function consultarSolicitud() {
+      const solicitudId = document.getElementById('solicitudId').value;
+
+      // Realizar la solicitud al servidor para obtener los detalles
+      fetch(`/api/solicitudes/${solicitudId}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Solicitud no encontrada');
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Mostrar los detalles de la solicitud
+          const detalleSolicitud = document.getElementById('detalleSolicitud');
+          detalleSolicitud.innerHTML = `
+            <p>ID: ${data.id}</p>
+            <p>DNI: ${data.dni}</p>
+            <p>Email: ${data.email}</p>
+            <p>Fecha: ${data.fecha}</p>
+            <p>Estado: ${data.estado}</p>
+          `;
+
+          // Mostrar el contenedor de resultado
+          document.getElementById('resultado').style.display = 'block';
+        })
+        .catch(error => {
+          // Manejar errores, por ejemplo, mostrar un mensaje de error
+          console.error(error);
+          alert('Error al consultar la solicitud. Asegúrate de que el ID sea correcto.');
+        });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+###
+GET http://localhost:3000/api/alumnos HTTP/1.1
+
+###
+GET http://localhost:3000/api/alumnos/ HTTP/1.1
+
+###
+POST http://localhost:3000/api/solicitudes HTTP/1.1
+Content-Type: application/json
+{
+  "dni": "12345678",
+  "email": "juan@example.com",
+  "fecha": "05-05-2023",
+  "estado" : ""
+}
+
+###
+PUT http://localhost:3000/api/users/7 HTTP/1.1
+Content-Type: application/json
+
+{
+  "password": "detz_123"
+}
+
+###
+DELETE http://localhost:3000/api/users/6 HTTP/1.1
